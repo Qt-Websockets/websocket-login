@@ -1,0 +1,76 @@
+/* line 4, ../../app/styles/main.scss */
+body, html {
+  background-color: black;
+}
+
+/* line 7, ../../app/styles/main.scss */
+#login {
+  background-color: #333;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  color: white;
+  margin: 24px;
+}
+/* line 12, ../../app/styles/main.scss */
+#login h1 {
+  text-align: center;
+  padding: 12px;
+  margin: 0;
+}
+/* line 17, ../../app/styles/main.scss */
+#login fieldset {
+  text-align: center;
+}
+/* line 18, ../../app/styles/main.scss */
+#login fieldset input {
+  margin-right: 7px;
+  margin-left: 7px;
+  margin-bottom: 20px;
+}
+/* line 25, ../../app/styles/main.scss */
+#login input[type="submit"], #login input[type="button"] {
+  width: 90px;
+}
+/* line 28, ../../app/styles/main.scss */
+#login input[type="submit"] {
+  font-weight: bold;
+}
+
+/* line 32, ../../app/styles/main.scss */
+#register {
+  background-color: #333;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  color: white;
+  margin: 24px;
+}
+/* line 37, ../../app/styles/main.scss */
+#register h1 {
+  text-align: center;
+  padding: 12px;
+  margin: 0;
+}
+/* line 42, ../../app/styles/main.scss */
+#register fieldset {
+  text-align: center;
+}
+/* line 43, ../../app/styles/main.scss */
+#register fieldset input {
+  margin-right: 7px;
+  margin-left: 7px;
+  margin-bottom: 20px;
+}
+/* line 50, ../../app/styles/main.scss */
+#register input[type="submit"], #register input[type="button"] {
+  width: 90px;
+}
+/* line 53, ../../app/styles/main.scss */
+#register input[type="submit"] {
+  font-weight: bold;
+}

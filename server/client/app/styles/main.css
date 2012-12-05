@@ -1,0 +1,119 @@
+body, html {
+  background-color: #000000;
+}
+#viewport div.main_container, #viewport form.main_container {
+  background-color: #333;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  color: #ffffff;
+  margin: 20px;
+  padding: 20px;
+}
+#viewport div.main_container h1, #viewport form.main_container h1 {
+  text-align: center;
+  margin: 0;
+  color: #B18A27;
+  padding: 10px;
+}
+#viewport div.main_container h2, #viewport form.main_container h2 {
+  text-align: center;
+}
+#viewport div.main_container fieldset,
+#viewport form.main_container fieldset {
+  text-align: center;
+}
+#viewport div.main_container fieldset input,
+#viewport form.main_container fieldset input {
+  margin-right: 7px;
+  margin-left: 7px;
+}
+#viewport div.main_container fieldset input[type="password"],
+#viewport div.main_container fieldset input[type="text"],
+#viewport form.main_container fieldset input[type="password"],
+#viewport form.main_container fieldset input[type="text"] {
+  margin-bottom: 20px;
+}
+#viewport div.main_container fieldset input[type="button"],
+#viewport div.main_container fieldset input[type="submit"],
+#viewport form.main_container fieldset input[type="button"],
+#viewport form.main_container fieldset input[type="submit"] {
+  width: 90px;
+}
+#viewport div.main_container fieldset input[type="submit"],
+#viewport form.main_container fieldset input[type="submit"] {
+  font-weight: bold;
+}
+#viewport div.main_container fieldset input[type="checkbox"],
+#viewport form.main_container fieldset input[type="checkbox"] {
+  margin: 0px;
+  margin-right: 12px;
+  margin-bottom: 3px;
+}
+#viewport div.main_container fieldset label,
+#viewport form.main_container fieldset label {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  color: #B18A27;
+}
+#viewport div.main_container fieldset label:hover,
+#viewport form.main_container fieldset label:hover {
+  cursor: pointer;
+}
+#viewport div.error {
+  color: #ff0000;
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+  margin-bottom: 6px;
+  padding: 5px;
+}
+#main {
+  color: #ffffff;
+}
+#notfound {
+  background-color: #300;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  color: #700000;
+  margin: 24px;
+}
+#notfound h1 {
+  text-align: center;
+  padding: 12px;
+  margin: 0;
+}
+#main_controls {
+  float: right;
+  position: absolute;
+  right: 40px;
+  margin: 0px !important;
+  padding: 0px;
+  text-align: right;
+  padding-top: 2px;
+  padding-right: 6px;
+  padding-bottom: 2px;
+  padding-left: 6px;
+  background-color: #0f2838 !important;
+}
+.try_again {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+#main_title {
+  height: 60px;
+  margin-bottom: 20px;
+  background-color: #666;
+}
+#main_title h1 {
+  float: left;
+}
+
