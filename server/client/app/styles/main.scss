@@ -17,6 +17,7 @@ body, html {
 			margin: 0;
 			color: #B18A27;
 			padding: 10px;
+
 		}
 		h2 {
 			text-align: center;
@@ -67,7 +68,7 @@ body, html {
 }
 #notfound {
 	background-color: #300;
-	@include border-radius(3px);
+	@include border-radius(6px);
 	color: #700000;
 	margin: 24px;
 	h1 {
@@ -78,17 +79,28 @@ body, html {
 }
 
 #main_controls {
-	float: right;
-	position: absolute;
-	right: 40px;
+
 	margin: 0px !important;
 	padding: 0px;
-	text-align: right;
-	padding-top: 2px;
-	padding-right: 6px;
-	padding-bottom: 2px;
-	padding-left: 6px;
-	background-color: #0F2838 !important;
+	background-color: #333; !important;
+	span {
+		@include border-top-left-radius(6px);
+		@include border-top-right-radius(6px);
+		background-color: #4D4D4D;
+		display: inline-block;
+		padding: 8px;
+	}
+	a {
+		display: inline-block;
+		padding: 8px;
+	}
+	a:hover {
+		@include border-top-left-radius(6px);
+		@include border-top-right-radius(6px);
+		background-color: #424242;
+		padding: 8px;
+		color: #69B46F;
+	}
 }
 
 .try_again {
@@ -98,10 +110,14 @@ body, html {
 }
 
 #main_title {
-	height: 60px;
+	height: 96px;
 	margin-bottom: 20px;
-	background-color: #666;
+	background-color: #4D4D4D;
 	h1 {
 		float: left;
 	}
+}
+
+@media screen and (max-width: 485px) {
+
 }

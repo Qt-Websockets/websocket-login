@@ -8,6 +8,10 @@ clientApp.config(['$routeProvider', '$locationProvider', '$httpProvider', functi
 			templateUrl: 'views/main.html',
 			controller: 'MainCtrl'
 		})
+		.when('/chat', {
+			templateUrl: 'views/chat.html',
+			controller: 'ChatCtrl'
+		})
 		.when('/settings', {
 			templateUrl: 'views/settings.html',
 			controller: 'SettingsCtrl'
