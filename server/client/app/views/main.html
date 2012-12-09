@@ -3,9 +3,11 @@
 		<div id="main_controls">
 			<span>Home</span> <a href="#/chat">Chat</a> <a href="/#/settings">Settings</a> <a href="/logout">Logout</a>
 		</div>
-		<h1>Welcome</h1>
+		<div id="main_info">
+			<h1>Welcome, {{ userName }}</h1>
+		</div>
 	</div>
-  <ul>
-      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-  </ul>
+	<div id="main_content">
+		Please report any bugs to <a href="mailto:alex@snakebyte.net">alex@snakebyte.net</a>
+	</div>
 </div>

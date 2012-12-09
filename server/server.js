@@ -27,14 +27,14 @@ var http = require('http'),
 var SECOND = 1000;
 var MINUTE = 60000;
 var HOUR = 3600000;
-var DAY = 86400000
+var DAY = 86400000;
 var MONTH = 2628000000;
 
 
 // Port where we'll run the express and socket.io server
 var PORT = 8585;
 // list of sockets belonging to ALL currently connected clients (users) 
-var socket_clients = [ ];
+var SOCKET_CLIENTS = [ ]; 
 // default session lengths
 var SESS_LENGTH = HOUR;
 // minimum username length
@@ -48,9 +48,13 @@ var SALT_WORK_FACTOR = 10;
 // Login attempts allowed
 var MAX_LOGIN_ATTEMPTS = 5;
 // list of all usernames currently in use
-var user_names = [ ];
+var USER_LIST = {};
 // latest 100 chat messages
-var chat_history = [ ];
+var CHAT_HISTORY = [ ];
+// Chat Buffer Size
+var CHAT_BUFFER_SIZE = 40;
+//
+var CHATROOM_LIST = {};
 // list of available player colors
 var colors = [ 'green', 'blue', 'darkred', 'purple', 'yellowgreen', 'darkblue', 'firebrick' ];
 // SSL Certs
@@ -66,7 +70,7 @@ var SSL_OPTIONS = {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function log(msg) {
-	console.log(fromat_time(new Date()) + ' - ' + msg);
+	console.log(format_time(new Date()) + ' - ' + msg);
 }
 
 // Helper function for escaping input strings
@@ -82,7 +86,7 @@ function shuffle(arr) {
 }
 
 // format time for server console
-function fromat_time(dt) {
+function format_time(dt) {
 	var ap = "AM";
 	var hour = dt.getHours();
 	if (hour   > 11) { ap = "PM";        }
@@ -233,6 +237,7 @@ web_server.post('/login', function(req, res) {
 										SESS_LENGTH = MONTH;
 									}
 									req.session.username = username;
+									req.session.sid = sid;
 									req.session.cookie.expires = new Date(Date.now() + SESS_LENGTH);
 									req.session.cookie.maxAge = SESS_LENGTH;
 									redis_client.hget('user:' + req.session.username, "active_session", function(err, obj) {
@@ -443,39 +448,105 @@ socket_server.set('authorization', function (data, accept) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // when a user connects
 socket_server.sockets.on('connection', function (socket) {
+	// USER "GLOBAL" VARIABLES
 	var username = socket.handshake.session.username;
+	var sid = socket.handshake.session.sid;
+	var client_index = SOCKET_CLIENTS.push(socket) - 1;   // we need to know the connecting user's index in the 'clients' array to remove them later when they disconnect
+
 	// log the event to the server console
 	log('User \'' + username + '\' has connected');
 
-	// we need to know the connecting user's index in the 'clients' array
-	// to remove them later when they disconnect
-	var index = socket_clients.push(socket) - 1;
+	var user = {name: username};
+	delete USER_LIST[username];
+	USER_LIST[username] = user;
+	
 
+	// Join the user to all default rooms
+	socket.join('Lobby');
+	socket.join(sid);
 
-	socket.emit('handshake', {username: username});
+	// Generate a list of chatrooms and the usersizes
+	for (var room_name in socket_server.sockets.manager.rooms) {
+		var obj = socket_server.sockets.manager.rooms[room_name];
+
+		if((room_name != '') && (room_name.length < 40)) {
+			delete CHATROOM_LIST[chatroom];
+			var chatroom = {
+				name: room_name.substring(1,room_name.length),
+				size: obj.length
+			}
+			CHATROOM_LIST[room_name] = chatroom;
+		}
+	}
+
+	socket.emit('chat:rooms', CHATROOM_LIST);
+	socket.broadcast.emit('chat:rooms', CHATROOM_LIST);
+	socket.emit('chat:users', {userlist: USER_LIST});
+	socket.broadcast.emit('chat:users', {userlist: USER_LIST});
+
+	socket.on('nav', function(data) { 
+		if(data.loc == 'main') {
+			socket.emit('main:info', {username: username});
+		} else if (data.loc == 'chat') {
+			socket.emit('chat:users', {userlist: USER_LIST});
+			socket.emit('chat:rooms', CHATROOM_LIST);
+			// send the chat_history to the connecting user (if one exists)
+		    if (CHAT_HISTORY.length > 0) {
+		        socket.emit('chat:history', {data: CHAT_HISTORY});
+		    }
+		}
+	});
 
 	// when recieving a chat message from a user
-	socket.on('chatmessage', function(message) {
+	socket.on('chat:message', function(message) {
+
 		// log the message to the server console
-		log(userName + ' says: ' + message.text);
+		log(username + ' says: ' + message.text);
+
+
+		var hash = Math.random() * Math.pow(10, 17) + Math.random() * Math.pow(10, 17) + Math.random() * Math.pow(10, 17) + Math.random() * Math.pow(10, 17);
 
 		// keep a history of all sent messages
 		var msg = {
+			hash: hash,
 			time: (new Date()).getTime(),
 			text: html_escape(message.text),
-			author: userName,
-			color: userColor
+			author: username
 		};
-		chat_history.push(msg);
-		chat_history = chat_history.slice(-100);  
+		CHAT_HISTORY.push(msg);
+		CHAT_HISTORY = CHAT_HISTORY.slice(-CHAT_BUFFER_SIZE);  
 
 		// broadcast message to all connected clients
-		socket.emit('chatmessage', {msg: msg});
-		socket.broadcast.emit('chatmessage', {msg: msg});
+		socket.emit('chat:message', {msg: msg});
+		socket.broadcast.emit('chat:message', {msg: msg});
 	});
 
 	// when a user disconnects
 	socket.on('disconnect', function () {
 		log('User \'' + username + '\' has disconnected');
+        // remove user from the list of connected clients
+        SOCKET_CLIENTS.splice(client_index, 1);
+        // remove the username from the list of availible usernames
+        delete USER_LIST[username];
+        socket.broadcast.emit('chat:users', {userlist: USER_LIST});
+        socket.leave('Lobby');
+
+		for (var room_name in socket_server.sockets.manager.rooms) {
+			var obj = socket_server.sockets.manager.rooms[room_name];
+
+			if((room_name != '') && (room_name.length < 40)) {
+				delete CHATROOM_LIST[chatroom];
+				var chatroom = {size: obj.length, name: room_name.substring(1,room_name.length)}
+				CHATROOM_LIST[room_name] = chatroom;
+			}
+			/*
+			for (var prop in obj) {
+			  console.log(prop + " = " + obj[prop]);
+			}
+			*/
+		}
+
+		socket.broadcast.emit('chat:rooms', CHATROOM_LIST);
+		socket.broadcast.emit('chat:users', {userlist: USER_LIST});
 	});
 });

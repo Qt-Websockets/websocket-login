@@ -3,9 +3,31 @@
 		<div id="main_controls">
 			<a href="#/">Home</a> <span>Chat</span> <a href="/#/settings">Settings</a> <a href="/logout">Logout</a>
 		</div>
-		<h1>Chat</h1>
+		<div id="main_info">
+			<h1>Rooms:</h1>
+			<ul>
+				<li ng-repeat="room in roomList"><a href="#/chat">{{ room.name }}</a> ({{room.size}})</li>
+			</ul>
+		</div>
 	</div>
-  <ul>
-      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-  </ul>
+	<div id="main_content">
+		<div id="chat" class="cf">
+			<div id="chat_left">
+				<div id="chat_body" class="body">
+					<div class="message" ng-repeat="message in chatBuffer">
+						<span class="time">({{ message.time | date:'h:mma'}})</span> <span class="username">{{ message.author }}</span>: {{ message.text }}
+					</div>
+				</div>
+				<div class="input">
+					<input id="chat_input" type="text">
+				</div>
+			</div>
+			<div class="user_list">
+				<h2>Users Online:</h2>
+				<ul>
+					<li ng-repeat="user in userList"><a href="#/chat">{{user.name}}</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>

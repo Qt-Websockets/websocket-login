@@ -1,22 +1,46 @@
+body {
+  width: 100%;
+  *zoom: 1;
+}
+body:after, body:before {
+  content: "";
+  display: table;
+}
+body:after {
+  clear: both;
+}
+.cf:after, .cf:before {
+  content: " ";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.cf {
+  *zoom: 1;
+}
 body, html {
   background-color: #000000;
 }
 #viewport div.main_container, #viewport form.main_container {
   background-color: #333;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
   color: #ffffff;
-  margin: 20px;
-  padding: 20px;
+  margin: 12px;
+  padding: 10px;
 }
 #viewport div.main_container h1, #viewport form.main_container h1 {
   text-align: center;
   margin: 0;
   color: #B18A27;
-  padding: 10px;
+  padding: 5px;
+  padding-left: 12px;
+  font-size: 2em;
+  display: inline;
 }
 #viewport div.main_container h2, #viewport form.main_container h2 {
   text-align: center;
@@ -74,6 +98,7 @@ body, html {
 }
 #main {
   color: #ffffff;
+  min-width: 324px;
 }
 #notfound {
   background-color: #300;
@@ -91,8 +116,11 @@ body, html {
   margin: 0;
 }
 #main_controls {
-  margin: 0px !important;
+  white-space: nowrap;
+  margin: 0px;
   padding: 0px;
+  margin-left: 6px;
+  margin-right: 6px;
   background-color: #333;
   !important;
 }
@@ -105,11 +133,19 @@ body, html {
   border-top-right-radius: 6px;
   background-color: #4D4D4D;
   display: inline-block;
-  padding: 8px;
+  padding: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-weight: bold;
+  font-size: 1.2em;
 }
 #main_controls a {
   display: inline-block;
-  padding: 8px;
+  padding: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-weight: bold;
+  font-size: 1.2em;
 }
 #main_controls a:hover {
   -moz-border-radius-topleft: 6px;
@@ -118,8 +154,7 @@ body, html {
   -moz-border-radius-topright: 6px;
   -webkit-border-top-right-radius: 6px;
   border-top-right-radius: 6px;
-  background-color: #424242;
-  padding: 8px;
+  background-color: #3D3D3D;
   color: #69B46F;
 }
 .try_again {
@@ -128,11 +163,205 @@ body, html {
   font-size: 1.2em;
 }
 #main_title {
-  height: 96px;
-  margin-bottom: 20px;
-  background-color: #4D4D4D;
+  height: 83px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
 }
 #main_title h1 {
   float: left;
+}
+#main_title #main_info {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  height: 50px;
+  background-color: #4d4d4d !important;
+  vertical-align: middle;
+}
+#main_title #main_info li, #main_title #main_info ul {
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+#main_title #main_info li {
+  margin-top: 8px;
+  margin-left: 4px;
+  margin-right: 4px;
+  padding: 7px;
+  background-color: #646464;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+}
+#main_title #main_info li a {
+  color: #69B46F;
+  font-weight: bold;
+}
+#main_title #main_info li a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+#main_title #main_info li:hover {
+  background-color: #A5A5A5;
+  cursor: pointer;
+}
+#main_title #main_info li:hover a {
+  color: #ffffff;
+}
+#main_content {
+  background-color: #4D4D4D;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  padding: 10px;
+}
+#main_content ul {
+  margin: 0px;
+  list-style: none;
+}
+#main_content a {
+  color: #69B46F;
+}
+#main_content a:hover {
+  color: #ffffff;
+}
+#chat #chat_body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+#chat #chat_body div {
+  padding-left: 4px;
+}
+#chat #chat_body .time {
+  font-size: 0.7em;
+  color: #333;
+}
+#chat #chat_body .username {
+  color: #B18A27;
+  font-weight: bold;
+}
+#chat .body {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  height: 200px;
+  background-color: #646464;
+}
+#chat .body .message {
+  opacity: 0;
+}
+#chat .input {
+  padding-right: 10px;
+  padding-left: 0px;
+  margin-right: 2px;
+}
+#chat .input input {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  background-color: #A5A5A5;
+  display: block;
+  width: 100%;
+  padding: 6px;
+  border-width: 0;
+  margin: 0px;
+  margin-top: 10px;
+}
+#chat .user_list h2 {
+  color: #B18A27;
+  font-size: 1.8em;
+  margin: 0px;
+}
+#chat .user_list ul li {
+  padding-right: 10px;
+  padding-left: 0px;
+}
+#chat .user_list ul li a {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  background-color: #646464;
+  color: #69B46F;
+  font-weight: bold;
+  width: 100%;
+  display: inline-block;
+  padding: 5px;
+  margin-bottom: 6px;
+}
+#chat .user_list ul li a:hover {
+  background-color: #A5A5A5;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+#chat .user_list ul li:last-child a {
+  margin-bottom: 0px;
+}
+.emoticon {
+  background: url(../images/sprite.png) no-repeat;
+  display: inline-block;
+  height: 18px;
+  margin: 0 1px;
+  text-indent: -99999px;
+  vertical-align: middle;
+  width: 18px;
+}
+.emoticon-grin {
+  background-position: 0 0;
+}
+.emoticon-smile {
+  background-position: -18px 0;
+}
+.emoticon-wink {
+  background-position: -36px 0;
+}
+.emoticon-sad {
+  background-position: -54px 0;
+}
+.emoticon-cheeky {
+  background-position: -72px 0;
+}
+@media screen and (min-width: 485px) {
+  #chat_left {
+    display: inline;
+    float: left;
+    width: 70%;
+    margin: 0px;
+  }
+}
+@media screen and (min-width: 485px) {
+  #chat .body {
+    height: 286px;
+  }
+}
+@media screen and (min-width: 485px) {
+  .user_list {
+    display: inline;
+    float: left;
+    width: 30%;
+    margin: 0px;
+  }
+}
+@media screen and (min-width: 485px) {
+  .user_list h2 {
+    display: none;
+  }
+}
+@media screen and (min-width: 485px) {
+  .user_list ul li {
+    padding-left: 10px !important;
+  }
 }
 

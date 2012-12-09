@@ -2,7 +2,7 @@
 
 clientApp.controller('SettingsCtrl', function($scope) {
 	$scope.awesomeThings = [
-		'welcome to settings',
-		'foobar'
+		'welcome to the settings page',
+		'coming soon...'
 	];
 });
