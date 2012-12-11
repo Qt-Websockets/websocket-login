@@ -9,4 +9,8 @@ clientApp.controller('MainCtrl', function($scope, socket) {
 			$scope.userName = data.username;
 		});
 	});
+
+	$scope.$watch("userName", function(newValue){
+		$('#main_info .username').animate({ opacity: 1 }, 1500); 
+	});
 });

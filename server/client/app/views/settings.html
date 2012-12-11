@@ -1,15 +1,29 @@
 <div id="main" class="main_container">
 	<div id="main_title">
 		<div id="main_controls">
-			<a href="#/">Home</a> <a href="#/chat">Chat</a> <span>Settings</span> <a href="/logout">Logout</a>
+			<ul>
+				<li><a href="#/">Home</a></li>
+				<li><a href="#/chat">Chat</a></li>
+				<li><span>Settings</span></li>
+				<li><a href="/logout">Logout</a></li>
+			</ul>
 		</div>
 		<div id="main_info">
 			<h1>Settings</h1>
 		</div>
 	</div>
-	<div id="main_content">
-		<ul>
-			<li ng-repeat="thing in awesomeThings">{{thing}}</li>
-		</ul>
+	<div id="main_content" class="settings">
+		<h2>Profile Settings</h2>
+		<form id="profile_settings">
+			Username color:
+			<label for="user_red"><input ng-model="userColor" value="red" id="user_red" type="radio" name="search-user_color">Red</label>
+			<label for="user_green"><input ng-model="userColor" value="green" id="user_green" type="radio" name="user_color">Green</label>
+			<label for="user_blue"><input ng-model="userColor" value="blue" id="user_blue" type="radio" name="user_color">Blue</label>
+			<label for="user_orange"><input ng-model="userColor" value="orange" id="user_orange" type="radio" name="user_color">Orange</label>
+		</form>
+		<h2>Local Settings</h2>
+		<form id="local_settings">
+			<label for="show_joinpart"><input type="checkbox" id="show_joinpart" name="show_joinpart" ng:model="show_joinpart.checked" ngChange="show_joinpartChange()"> Show user connected/disconnected messages in chat.</label>
+		</form>
 	</div>
 </div>

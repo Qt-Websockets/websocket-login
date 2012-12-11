@@ -22,6 +22,9 @@ body:after {
 body, html {
   background-color: #000000;
 }
+#overlay {
+  opacity: 0;
+}
 #viewport div.main_container, #viewport form.main_container {
   background-color: #333;
   -webkit-border-radius: 6px;
@@ -30,17 +33,19 @@ body, html {
   -o-border-radius: 6px;
   border-radius: 6px;
   color: #ffffff;
-  margin: 12px;
-  padding: 10px;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 15px;
 }
 #viewport div.main_container h1, #viewport form.main_container h1 {
+  vertical-align: middle;
   text-align: center;
   margin: 0;
   color: #B18A27;
   padding: 5px;
   padding-left: 12px;
   font-size: 2em;
-  display: inline;
+  display: inline-block;
 }
 #viewport div.main_container h2, #viewport form.main_container h2 {
   text-align: center;
@@ -108,7 +113,6 @@ body, html {
   -o-border-radius: 6px;
   border-radius: 6px;
   color: #700000;
-  margin: 24px;
 }
 #notfound h1 {
   text-align: center;
@@ -123,6 +127,12 @@ body, html {
   margin-right: 6px;
   background-color: #333;
   !important;
+}
+#main_controls li, #main_controls ul {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  display: inline;
 }
 #main_controls span {
   -moz-border-radius-topleft: 6px;
@@ -162,21 +172,12 @@ body, html {
   font-weight: bold;
   font-size: 1.2em;
 }
-#main_title {
-  height: 83px;
-  margin-bottom: 10px;
-  padding-bottom: 6px;
-}
-#main_title h1 {
-  float: left;
-}
 #main_title #main_info {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
   -o-border-radius: 6px;
   border-radius: 6px;
-  height: 50px;
   background-color: #4d4d4d !important;
   vertical-align: middle;
 }
@@ -187,7 +188,7 @@ body, html {
   list-style: none;
 }
 #main_title #main_info li {
-  margin-top: 8px;
+  margin-bottom: 8px;
   margin-left: 4px;
   margin-right: 4px;
   padding: 7px;
@@ -213,6 +214,9 @@ body, html {
 #main_title #main_info li:hover a {
   color: #ffffff;
 }
+#main_title #main_info .username {
+  opacity: 0;
+}
 #main_content {
   background-color: #4D4D4D;
   -webkit-border-radius: 6px;
@@ -221,6 +225,19 @@ body, html {
   -o-border-radius: 6px;
   border-radius: 6px;
   padding: 10px;
+  margin-top: 10px;
+}
+#main_content input[type="checkbox"] {
+  margin-bottom: 6px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+#main_content h2 {
+  color: #B18A27;
+  font-size: 1.5em;
+  text-align: left !important;
+  padding: 0px !important;
+  margin: 0px;
 }
 #main_content ul {
   margin: 0px;
@@ -231,6 +248,10 @@ body, html {
 }
 #main_content a:hover {
   color: #ffffff;
+}
+#main_content.settings form {
+  padding: 0px !important;
+  margin: 0px !important;
 }
 #chat #chat_body {
   overflow-y: scroll;
@@ -258,6 +279,7 @@ body, html {
 }
 #chat .body .message {
   opacity: 0;
+  color: #EEEEEE;
 }
 #chat .input {
   padding-right: 10px;
@@ -309,29 +331,84 @@ body, html {
 #chat .user_list ul li:last-child a {
   margin-bottom: 0px;
 }
+#profile_settings label {
+  cursor: pointer;
+}
+#profile_settings input[type=radio] {
+  margin-bottom: 6px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+#profile_settings label[for=user_red] {
+  color: #D84040;
+  font-weight: bold;
+}
+#profile_settings label[for=user_green] {
+  color: #48BB32;
+  font-weight: bold;
+}
+#profile_settings label[for=user_blue] {
+  color: #4F69F1;
+  font-weight: bold;
+}
+#profile_settings label[for=user_orange] {
+  color: #ffa500;
+  font-weight: bold;
+}
 .emoticon {
-  background: url(../images/sprite.png) no-repeat;
+  background: url(../images/smilies.png) no-repeat;
   display: inline-block;
-  height: 18px;
+  height: 21x;
+  width: 21px;
   margin: 0 1px;
+  padding-bottom: 3px;
   text-indent: -99999px;
   vertical-align: middle;
-  width: 18px;
-}
-.emoticon-grin {
-  background-position: 0 0;
 }
 .emoticon-smile {
-  background-position: -18px 0;
+  background-position: 0 0;
+}
+.emoticon-grin {
+  background-position: -21px 0;
+}
+.emoticon-frown {
+  background-position: -42px 0;
 }
 .emoticon-wink {
-  background-position: -36px 0;
+  background-position: -63px 0;
+}
+.emoticon-cheeky {
+  background-position: -84px 0;
+}
+.emoticon-surprised {
+  background-position: -105px 0;
+}
+.emoticon-kiss {
+  background-position: -126px 0;
+}
+.emoticon-cool {
+  background-position: -147px 0;
+}
+.emoticon-embarassed {
+  background-position: -168px 0;
+}
+.emoticon-cry {
+  background-position: -189px 0;
+}
+.emoticon-skeptical {
+  background-position: -210px 0;
+}
+.emoticon-angel {
+  background-position: -210px 0;
 }
 .emoticon-sad {
   background-position: -54px 0;
 }
-.emoticon-cheeky {
-  background-position: -72px 0;
+@media screen and (min-width: 485px) {
+  #viewport div.main_container, #viewport form.main_container {
+    margin: 12px;
+    padding: 10px;
+  }
 }
 @media screen and (min-width: 485px) {
   #chat_left {

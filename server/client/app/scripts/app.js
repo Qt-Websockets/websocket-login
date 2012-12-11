@@ -1,6 +1,40 @@
 'use strict';
 
-var clientApp = angular.module('clientApp', []);
+function set_overlay(state) {
+   var docHeight = $(document).height();
+
+   if(state == true) {
+   		if($("#overlay").length == 0) {
+			$("body").append("<div id='overlay'></div>");
+
+			$("#overlay")
+				.height(docHeight)
+				.css({
+					'opacity' : 0,
+					'position': 'absolute',
+					'top': 0,
+					'left': 0,
+					'background-color': 'black',
+					'width': '100%',
+					'z-index': 5000
+				})
+				.animate({ opacity: 0.66 }, 300
+			);
+
+
+		}	
+	} else {
+		if($("#overlay").length > 0) {
+			$("#overlay").animate({ opacity: 0 }, 300, function() {
+				$("#overlay").remove();
+			});
+		}
+	}
+}
+
+
+// AngularJS init
+var clientApp = angular.module('clientApp', ['ngCookies']);
 
 clientApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider,$httpProvider) {
 	$routeProvider
@@ -31,10 +65,12 @@ clientApp.factory('socket', function ($rootScope) {
 
 	// Basic connect / disconnect socket bindings
 	socket.on('connect', function () {
+		set_overlay(false);
 		console.log('Connected');
 	});
 	
 	socket.on('disconnect', function () {
+		set_overlay(true);
 		console.log('Disconnected');
 	});
 

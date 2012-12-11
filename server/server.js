@@ -444,27 +444,25 @@ socket_server.set('authorization', function (data, accept) {
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// App Entry Point:
+// App Functions
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// when a user connects
-socket_server.sockets.on('connection', function (socket) {
-	// USER "GLOBAL" VARIABLES
-	var username = socket.handshake.session.username;
-	var sid = socket.handshake.session.sid;
-	var client_index = SOCKET_CLIENTS.push(socket) - 1;   // we need to know the connecting user's index in the 'clients' array to remove them later when they disconnect
+function chat_systemMessage(username, message, socket) {
+	var hash = Math.random() * Math.pow(10, 17) + Math.random() * Math.pow(10, 17) + Math.random() * Math.pow(10, 17) + Math.random() * Math.pow(10, 17);
 
-	// log the event to the server console
-	log('User \'' + username + '\' has connected');
+	var msg = {
+		hash: hash,
+		time: (new Date()).getTime(),
+		text: html_escape(username + ' ' + message),
+		author: 'system'
+	};
+	CHAT_HISTORY.push(msg);
+	CHAT_HISTORY = CHAT_HISTORY.slice(-CHAT_BUFFER_SIZE);  
 
-	var user = {name: username};
-	delete USER_LIST[username];
-	USER_LIST[username] = user;
-	
+	// broadcast message to all connected clients
+	socket.broadcast.emit('chat:message', {msg: msg});
+}
 
-	// Join the user to all default rooms
-	socket.join('Lobby');
-	socket.join(sid);
-
+function chat_updateRoomList(socket) {
 	// Generate a list of chatrooms and the usersizes
 	for (var room_name in socket_server.sockets.manager.rooms) {
 		var obj = socket_server.sockets.manager.rooms[room_name];
@@ -483,6 +481,33 @@ socket_server.sockets.on('connection', function (socket) {
 	socket.broadcast.emit('chat:rooms', CHATROOM_LIST);
 	socket.emit('chat:users', {userlist: USER_LIST});
 	socket.broadcast.emit('chat:users', {userlist: USER_LIST});
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// App Entry Point:
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// when a user connects
+socket_server.sockets.on('connection', function (socket) {
+	// USER "GLOBAL" VARIABLES
+	var username = socket.handshake.session.username;
+	var sid = socket.handshake.session.sid;
+	var client_index = SOCKET_CLIENTS.push(socket) - 1;   // we need to know the connecting user's index in the 'clients' array to remove them later when they disconnect
+
+	// log the event to the server console
+	log('User \'' + username + '\' has connected');
+	chat_systemMessage(username, 'has connected', socket);
+
+
+	var user = {name: username};
+	delete USER_LIST[username];
+	USER_LIST[username] = user;
+	
+
+	// Join the user to all default rooms
+	socket.join('Lobby');
+	socket.join(sid);
+
+	chat_updateRoomList(socket);
 
 	socket.on('nav', function(data) { 
 		if(data.loc == 'main') {
@@ -523,7 +548,7 @@ socket_server.sockets.on('connection', function (socket) {
 
 	// when a user disconnects
 	socket.on('disconnect', function () {
-		log('User \'' + username + '\' has disconnected');
+
         // remove user from the list of connected clients
         SOCKET_CLIENTS.splice(client_index, 1);
         // remove the username from the list of availible usernames
@@ -548,5 +573,7 @@ socket_server.sockets.on('connection', function (socket) {
 
 		socket.broadcast.emit('chat:rooms', CHATROOM_LIST);
 		socket.broadcast.emit('chat:users', {userlist: USER_LIST});
+		log('User \'' + username + '\' has disconnected');
+		chat_systemMessage(username, 'has disconnected', socket);
 	});
 });
